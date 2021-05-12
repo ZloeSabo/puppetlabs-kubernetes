@@ -170,6 +170,7 @@ class kubernetes::config::kubeadm (
     /1\.1(0|1)/          => 'v1alpha1',
     /1\.12/              => 'v1alpha3',
     /1\.1(3|4|5\.[012])/ => 'v1beta1',
+    /1\.2(0\.[012])/     => 'v1',
     default              => 'v1beta2',
   }
 

@@ -77,8 +77,8 @@ def configure_puppet_server(controller, worker1, worker2)
   site_pp = <<-EOS
   node /#{controller}/ {
     class {'kubernetes':
-      kubernetes_version => '1.20.0',
-      kubernetes_package_version => '1.20.0',
+      kubernetes_version => '1.20.6',
+      kubernetes_package_version => '1.20.6',
       controller_address => "$::ipaddress:6443",
       container_runtime => 'docker',
       manage_docker => false,
@@ -283,7 +283,7 @@ EOS
 
   ENV['TARGET_HOST'] = target_roles('controller')[0][:name]
   run_shell('docker build -t kubetool:latest /etc/puppetlabs/code/environments/production/modules/kubernetes/tooling')
-  run_shell("docker run --rm -v $(pwd)/hieradata:/mnt -e OS=#{family} -e VERSION=1.20.0 -e CONTAINER_RUNTIME=#{runtime} -e CNI_PROVIDER=#{cni} -e ETCD_INITIAL_CLUSTER=#{hostname1}:#{int_ipaddr1} -e ETCD_IP=#{int_ipaddr1} -e ETCD_PEERS=[#{int_ipaddr1},#{int_ipaddr2},#{int_ipaddr3}] -e KUBE_API_ADVERTISE_ADDRESS=#{int_ipaddr1} -e INSTALL_DASHBOARD=true kubetool:latest")
+  run_shell("docker run --rm -v $(pwd)/hieradata:/mnt -e OS=#{family} -e VERSION=1.20.6 -e CONTAINER_RUNTIME=#{runtime} -e CNI_PROVIDER=#{cni} -e ETCD_INITIAL_CLUSTER=#{hostname1}:#{int_ipaddr1} -e ETCD_IP=#{int_ipaddr1} -e ETCD_PEERS=[#{int_ipaddr1},#{int_ipaddr2},#{int_ipaddr3}] -e KUBE_API_ADVERTISE_ADDRESS=#{int_ipaddr1} -e INSTALL_DASHBOARD=true kubetool:latest")
   create_remote_file("nginx","/tmp/nginx.yml", nginx)
   create_remote_file("hiera","/etc/puppetlabs/puppet/hiera.yaml", hiera)
   run_shell('chmod 644 /etc/puppetlabs/puppet/hiera.yaml')
